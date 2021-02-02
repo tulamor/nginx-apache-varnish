@@ -41,4 +41,4 @@ sub vcl_recv {
 EOT
 sed -i 's/^VARNISH_LISTEN_PORT=6081/VARNISH_LISTEN_PORT=80/' /etc/varnish/varnish.params
 systemctl enable --now varnish.service
-systemctl enable --now varnishlog.service
+#systemctl enable --now varnishlog.service
