@@ -2,7 +2,7 @@
 yum install -y epel-release yum-utils
 yum install -y nginx
 
-cat <<EOT > /etc/nginx/nginx.conf
+cat << 'EOF' > /etc/nginx/nginx.conf
 user nginx;
 worker_processes auto;
 error_log /var/log/nginx/error.log;
@@ -24,6 +24,7 @@ http {
     tcp_nodelay           on;
     keepalive_timeout     65;
     types_hash_max_size 2048;
+    server_tokens off;
 
     include             /etc/nginx/mime.types;
     default_type        application/octet-stream;
@@ -55,7 +56,7 @@ http {
         }
     }
 }
-EOT
+EOF
 
 CPU_NUM=$(cat /proc/cpuinfo  | grep "processor" | wc -l)
 sed -i -e "s/worker_processes.*;/worker_processes $CPU_NUM;/" /etc/nginx/nginx.conf
