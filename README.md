@@ -2,11 +2,15 @@ Vagrant box configuration provides nginx & apache php web server environment use
 
 ### TODO
 ```
-1. Upload config files from host directly to the vagrant box instead of editing during deployment process
-2. Make config override / DO NOT USE GLOBAL SETTINGS! / Scalability improvement!
-3. Investigate why varnishlog.service failing
-4. Get rid of deployment "NOKEY" warnings / Importing GPG keys
-5. Take a look on code reuse improvements
+Make config files override default settings [use conf.d] 
+(Do not overwrite global conf files)
+Investigate why varnishlog.service failing
+Add security upgrades (dir listing / limit requests)
+Use exact version for downloading tools
+Disable "get latest" version of CENTOS
+Get rid of warnings "NOKEY" / GPG keys
+Check remote resources
+Provide additional links to remote resources if unavailable
 ```
 ### TESTS
 ```bash
@@ -28,17 +32,20 @@ Improved:
 ```bash
 # Hide apache server version
 /etc/httpd/conf/httpd.conf
+---
 ServerTokens Prod
 ServerSignature Off
 
 # Hide nginx server version
 /etc/nginx/nginx.conf
+---
 http {
   server_tokens off;
 }
 
 # Hide PHP server version
 /etc/php.ini
+---
+cgi.fix_pathinfo=0
 expose_php = off
-
 ```
