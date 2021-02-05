@@ -1,6 +1,3 @@
-########## VARNISH SETUP ########## 
-yum install -y varnish
-cat <<EOT > /etc/varnish/default.vcl
 vcl 4.0;
 
 import directors;
@@ -9,7 +6,7 @@ backend nginx {
     .host = "127.0.0.1";
     .port = "81";
     .probe = {
-        .url = "/";
+	.url = "/";
         .timeout = 1s;
         .interval = 5s;
         .window = 5;
@@ -21,7 +18,7 @@ backend apache {
     .host = "127.0.0.1";
     .port = "82";
     .probe = {
-        .url = "/";
+	.url = "/";
         .timeout = 1s;
         .interval = 5s;
         .window = 5;
@@ -38,7 +35,3 @@ sub vcl_init {
 sub vcl_recv {
     set req.backend_hint = lb.backend();
 }
-EOT
-sed -i 's/^VARNISH_LISTEN_PORT=6081/VARNISH_LISTEN_PORT=80/' /etc/varnish/varnish.params
-systemctl enable --now varnish.service
-#systemctl enable --now varnishlog.service
